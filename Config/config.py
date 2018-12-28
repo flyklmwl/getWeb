@@ -26,7 +26,13 @@ TECH_TABLE = '51cto'
 
 WX_CRT_TECH = '57DGnp55ii2Oxbf86AQ5YDAWYLF8QKLjNepb1uEa3gM'
 WX_AGTID_TECH = '1000004'
+# ===============================工    作=========================================
+WORK_URL = 'localhost'
+WORK_DB = 'work'
+WORK_TABLE = 'zhilian'
 
+WX_CRT_WORK = 'EYmraurMnmu5JyWd8ZyYtzBaDQMKFqORtQfKFij85So'
+WX_AGTID_WORK = '1000005'
 
 
 

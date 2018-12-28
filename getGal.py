@@ -24,9 +24,8 @@ def webpasre():
         hot_item = re.search('点击：(\d+|\-).*\|.*回复数：(\d+).*\|.*发表时间：(.*)&nbsp;\|', result.text)
         readid = re.findall('.*profile.php\?action=show.*\>(.*)\</a>', result.text)   # 楼主ID
         tui_item = robot001.get_item('#read_tui')
-        type_item = robot001.get_item('div.drow:nth-child(4) > div:nth-child(2) > form:nth-child(2) > div:nth-child(5) '
-                                      '> table:nth-child(1) > tr:nth-child(2) > td > a:nth-child(1)')
-
+        type_item = robot001.get_item('div.drow:nth-child(3) > div:nth-child(2) > form:nth-child(2) > div:nth-child(5) '
+                                      '> table:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > a:nth-child(1)')
         tz = {
             'tz_title': item.find('.indexlbtit2_t').text(),
             'tz_link': tz_link,
@@ -37,7 +36,7 @@ def webpasre():
             'tz_lz': readid[1],
             'tz_tui': tui_item.text()
         }
-        # print(tz['tz_type'])
+        print('帖子类型: ' + tz['tz_type'])
         if bs.add_save_data(tz, config.GAL_TABLE, 'tz_title'):   # 把字典存储到数据库，并把帖子标题和链接存到arr列表
             bs.packaging_mes(tz['tz_type'], tz['tz_title'], tz['tz_link'])
     bs.send_message(config.WX_CRT_GAL, config.WX_AGTID_GAL)

@@ -1,10 +1,17 @@
 from Config import config
 from Tools import robot
 from Tools import BackServer
+from datetime import datetime
 
 
 robot001 = robot.Robot("http://www.51cto.com/")
-bs1 = BackServer.BackServer(config.TECH_URL, config.TECH_DB, config.TECH_TABLE)
+bs1 = BackServer.BackServer(
+    config.TECH_URL,
+    config.TECH_DB,
+    config.TECH_TABLE,
+    config.WX_CRT_TECH,
+    config.WX_AGTID_TECH
+)
 
 
 def _51cto():
@@ -18,11 +25,12 @@ def _51cto():
             break
         cto = {
             'title': item.text(),
-            'link': item.attr('href')
+            'link': item.attr('href'),
+            'date': datetime.now()
         }
-        if bs1.add_save_data(cto, config.TECH_TABLE, 'title'):
+        if bs1.save_data(cto, 'link'):
             bs1.packaging_mes(cto['title'], cto['link'])
-    bs1.send_message(config.WX_CRT_TECH, config.WX_AGTID_TECH)
+    bs1.send_message()
 
 
 def segmentfault():
@@ -35,11 +43,12 @@ def segmentfault():
         if item_count <= 5:
             tiezi = {
                 'title': item.text(),
-                'link': 'https://segmentfault.com' + item.attr('href')
+                'link': 'https://segmentfault.com' + item.attr('href'),
+                'date': datetime.now()
             }
-            if bs1.add_save_data(tiezi, config.TECH_TABLE, 'title'):
+            if bs1.save_data(tiezi, 'link'):
                 bs1.packaging_mes(tiezi['title'], tiezi['link'])
-    bs1.send_message(config.WX_CRT_TECH, config.WX_AGTID_TECH)
+    bs1.send_message()
 
 
 def main():
@@ -49,5 +58,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-

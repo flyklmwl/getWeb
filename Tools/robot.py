@@ -2,18 +2,17 @@ from pyquery import PyQuery as pq
 import http.cookiejar as cookielib
 import requests
 import os
-import chardet
 
 
 class Robot:
     # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0'}
 
     headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                             '(KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'}
+                         '(KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'}
     open_session = requests.session()
-    result = open_session.get('http://www.baidu.com')
+    result = 'zero'
 
-    def __init__(self, url):
+    def __init__(self, url):    # 传入解析地址
         self.url = url
 
     def islogin(self):
@@ -54,11 +53,11 @@ class Robot:
         #   print(f"text = {responseres.text}")
         self.open_session.cookies.save()
 
-    def connectpage(self, *args):     # 定义两个参数 第一个为连接网址，第二个为编码
+    def connectpage(self, *url, **args):     # 定义两个参数 第一个为连接网址，第二个为编码, 第三个参数为cookie
         num = 3     # 重试次数
         while num > 0:
             try:
-                self.result = self.open_session.get(args[0], headers=self.headers, timeout=5)
+                self.result = self.open_session.get(url[0], **args)
             except requests.exceptions.ConnectTimeout:
                 print('Timeout, try again')
                 num -= 1
@@ -67,9 +66,8 @@ class Robot:
                 num -= 1
             else:
                 print('ok')  # 成功获取
-                if len(args) > 1:
-                    self.result.encoding = args[1]
-                print(self.result.encoding)
+                if len(url) > 1:
+                    self.result.encoding = url[1]
                 return self.result
         else:
             print('Try 3 times, But all failed')    # 3次都失败
@@ -84,4 +82,10 @@ class Robot:
         doc = pq(self.result.text)
         item = doc(select_css).items()
         return item
+
+    # def parse_json(self, json, list):
+    #     print(a)
+    #     return True
+
+
 

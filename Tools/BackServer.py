@@ -4,12 +4,15 @@ import json
 
 
 class BackServer:
+    # 搜索、插入、更新数据库、发送微信信息
     send_arr = []  # list存储抓取的帖子信息，帖子信息是用字典存储的，发送微信号需要接收字符串
 
-    def __init__(self, conurl, condb, contable):
+    def __init__(self, conurl, condb, contable, crt, agtid):
         self.conurl = conurl
         self.condb = condb
         self.contable = contable
+        self.crt = crt
+        self.agtid = agtid
         self.client = pymongo.MongoClient(conurl)
         self.db = self.client[condb]
 
@@ -24,20 +27,20 @@ class BackServer:
         if self.db[save_table].delete_one({del_title: del_value}):
             print('delete document')
 
-    def send_message(self, crt, agtid):
+    def send_message(self):
         if not self.send_arr:
             print("需要发送的信息不存在")
             return
 
         corpid = 'wxeb4380288018eb1c'
-        corpsecret = crt
+        corpsecret = self.crt
         url = 'https://qyapi.weixin.qq.com'
         token_url = '%s/cgi-bin/gettoken?corpid=%s&corpsecret=%s' % (url, corpid, corpsecret)
         token = json.loads(urllib.request.urlopen(token_url).read().decode())['access_token']
         values = {
             "touser": '@all',
             "msgtype": 'text',
-            "agentid": agtid,  # 偷懒没有使用变量了，注意修改为对应应用的agentid
+            "agentid": self.agtid,  # 偷懒没有使用变量了，注意修改为对应应用的agentid
             "text": {'content': ' '.join(self.send_arr)},  # 这里注意是把list中的所有字符串都转换成一个发送出去
             "safe": 0
         }
@@ -50,13 +53,21 @@ class BackServer:
         else:
             print('Failed')
 
-    def add_save_data(self, data, tb, s_key):
-        if self.search_mongodb(tb, s_key, data[s_key]) < 1:
-            self.save_to_mongodb(tb, data)
+    def save_update_data(self, data, s_key):
+        if self.search_mongodb(self.contable, s_key, data[s_key]) < 1:
+            self.save_to_mongodb(self.contable, data)
             return True
         else:
-            self.del_to_mongodb(tb, s_key, data[s_key])
-            self.save_to_mongodb(tb, data)
+            self.del_to_mongodb(self.contable, s_key, data[s_key])
+            self.save_to_mongodb(self.contable, data)
+            print("已经保存了该主题")
+            return False
+
+    def save_data(self, data, s_key):
+        if self.search_mongodb(self.contable, s_key, data[s_key]) < 1:
+            self.save_to_mongodb(self.contable, data)
+            return True
+        else:
             print("已经保存了该主题")
             return False
 

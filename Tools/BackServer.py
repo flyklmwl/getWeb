@@ -21,37 +21,45 @@ class BackServer:
 
     def save_to_mongodb(self, save_table, result):
         if self.db[save_table].insert_one(result):
-            print('inserted into table')
+            print("inserted into table")
 
     def del_to_mongodb(self, save_table, del_title, del_value):
         if self.db[save_table].delete_one({del_title: del_value}):
-            print('delete document')
+            print("delete document")
 
     def send_message(self):
         if not self.send_arr:
             print("需要发送的信息不存在")
             return
 
-        corpid = 'wxeb4380288018eb1c'
+        corpid = "wxeb4380288018eb1c"
         corpsecret = self.crt
-        url = 'https://qyapi.weixin.qq.com'
-        token_url = '%s/cgi-bin/gettoken?corpid=%s&corpsecret=%s' % (url, corpid, corpsecret)
-        token = json.loads(urllib.request.urlopen(token_url).read().decode())['access_token']
+        url = "https://qyapi.weixin.qq.com"
+        token_url = "%s/cgi-bin/gettoken?corpid=%s&corpsecret=%s" % (
+            url,
+            corpid,
+            corpsecret,
+        )
+        token = json.loads(urllib.request.urlopen(token_url).read().decode())[
+            "access_token"
+        ]
         values = {
-            "touser": '@all',
-            "msgtype": 'text',
+            "touser": "@all",
+            "msgtype": "text",
             "agentid": self.agtid,  # 偷懒没有使用变量了，注意修改为对应应用的agentid
-            "text": {'content': ' '.join(self.send_arr)},  # 这里注意是把list中的所有字符串都转换成一个发送出去
-            "safe": 0
+            "text": {"content": " ".join(self.send_arr)},  # 这里注意是把list中的所有字符串都转换成一个发送出去
+            "safe": 0,
         }
-        msges = (bytes(json.dumps(values), 'utf-8'))
-        send_url = '%s/cgi-bin/message/send?access_token=%s' % (url, token)
-        respone = urllib.request.urlopen(urllib.request.Request(url=send_url, data=msges)).read()
-        x = json.loads(respone.decode())['errcode']
+        msges = bytes(json.dumps(values), "utf-8")
+        send_url = "%s/cgi-bin/message/send?access_token=%s" % (url, token)
+        respone = urllib.request.urlopen(
+            urllib.request.Request(url=send_url, data=msges)
+        ).read()
+        x = json.loads(respone.decode())["errcode"]
         if x == 0:
-            print('Succesfully')
+            print("Succesfully")
         else:
-            print('Failed')
+            print("Failed")
 
     def save_update_data(self, data, s_key):
         if self.search_mongodb(self.contable, s_key, data[s_key]) < 1:
@@ -74,9 +82,9 @@ class BackServer:
     def packaging_mes(self, *args):
         for i in range(len(args)):
             if i == len(args) - 1:
-                self.send_arr.append(args[i] + '\n' + '\n')
+                self.send_arr.append(args[i] + "\n" + "\n")
                 break
-            self.send_arr.append(args[i] + '\n')
+            self.send_arr.append(args[i] + "\n")
 
     def clear_arr(self):
         self.send_arr = []

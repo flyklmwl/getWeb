@@ -1,2 +1,2 @@
-cd /root/scripts/getWeb
-/usr/bin/python /root/scripts/getWeb/getGal.py > /root/scripts/logs/getGal.log 2>&1
+cd /python/getWeb
+/root/.local/share/virtualenvs/getWeb-Ed0cdT32/bin/python3 /python/getWeb/getGal.py >> /python/logs/getGal.log 2>&1

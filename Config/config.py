@@ -83,6 +83,13 @@ headers_zhihu = {
     "(KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
 }
 
+headers_lagou = {
+    "Accept": "application/json, text/javascript, */*; q=0.01",
+    "Referer": "https://www.lagou.com/jobs/list_%E8%BF%90%E7%BB%B4?city=%E6%88%90%E9%83%BD&cl=false&fromSearch="
+    "true&labelWords=&suginput=",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+}
+
 agent = [
     "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 "
     "Safari/534.50",

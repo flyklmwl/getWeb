@@ -11,7 +11,7 @@ def main():
         config.WX_CRT_GAL,
         config.WX_AGTID_GAL,
     )
-    robot001 = robot.GalRobot("https://www.9moe.com/")
+    robot001 = robot.GalRobot("https://bbs.kforz.com/")
 
     islogintag = robot001.islogin()
     if islogintag is False:

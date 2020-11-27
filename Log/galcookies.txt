@@ -1,6 +1,5 @@
 #LWP-Cookies-2.0
-Set-Cookie3: 2ed4e_ck_info="%2F%09"; path="/"; domain="www.9moe.com"; path_spec; secure; expires="2020-08-19 02:31:15Z"; httponly=None; version=0
-Set-Cookie3: 2ed4e_lastpos=other; path="/"; domain="www.9moe.com"; path_spec; secure; expires="2020-08-19 02:31:15Z"; httponly=None; version=0
-Set-Cookie3: 2ed4e_lastvisit="0%091566268275%09%2Flogin.php%3F"; path="/"; domain="www.9moe.com"; path_spec; secure; expires="2020-08-19 02:31:15Z"; httponly=None; version=0
-Set-Cookie3: 2ed4e_skinco=default; path="/"; domain="www.9moe.com"; path_spec; secure; expires="2020-08-19 02:31:15Z"; httponly=None; version=0
-Set-Cookie3: 2ed4e_winduser="AQNTDwYBOwUAUwJeBAsAUlgOUQRQAAZVVlAIVwZcBwFWVQwOBgFTMQ%3D%3D"; path="/"; domain="www.9moe.com"; path_spec; secure; expires="2020-08-19 02:31:15Z"; httponly=None; version=0
+Set-Cookie3: 2ed4e_ck_info="%2F%09"; path="/"; domain="bbs.kforz.com"; path_spec; secure; expires="2021-11-11 15:06:19Z"; httponly=None; version=0
+Set-Cookie3: 2ed4e_lastvisit="0%091605107179%09%2Flogin.php%3F"; path="/"; domain="bbs.kforz.com"; path_spec; secure; expires="2021-11-11 15:06:19Z"; httponly=None; version=0
+Set-Cookie3: 2ed4e_skinco=default; path="/"; domain="bbs.kforz.com"; path_spec; secure; expires="2021-11-11 15:06:19Z"; httponly=None; version=0
+Set-Cookie3: 2ed4e_winduser="AQNTDwYBOwUAUwJeBAsAUlgOUQRQAAZVVlAIVwZcBwFWVQwOBgFTMQ%3D%3D"; path="/"; domain="bbs.kforz.com"; path_spec; secure; expires="2021-11-11 15:06:19Z"; httponly=None; version=0

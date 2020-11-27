@@ -23,6 +23,8 @@ bs = BackServer.BackServer(
 
 class Robot:
     # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0'}
+    def sourcepage(self):
+        print(self.result.text)
 
     headers = {
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -88,7 +90,8 @@ class GalRobot(Robot):
 
             # 获取帖子标题、链接、类型
             tz_title = item.find(".indexlbtit2_t").text()
-            tz_link = "https://www.9moe.com/" + item.children().attr("href")
+            # tz_link = "https://www.9moe.com/" + item.children().attr("href")
+            tz_link = self.url + item.children().attr("href")
 
             result = self.connectpage(tz_link, headers=config.headers, timeout=5)
             tz_type = self.get_item(
@@ -136,7 +139,7 @@ class GalRobot(Robot):
             print("没有cookie文件")
         try:
             responseres = self.open_session.get(
-                "https://www.9moe.com/index.php",
+                self.url,
                 headers=self.headers,
                 allow_redirects=False,
             )
@@ -159,7 +162,8 @@ class GalRobot(Robot):
         print("正在登陆...")
         postdata = {
             "forward": "",
-            "jumpurl": "https://www.9moe.com/index.php",
+            # "jumpurl": "https://www.9moe.com/index.php",
+            "jumpurl": self.url,
             "step": "2",
             "lgt": "1",
             "hideid": "0",
@@ -170,7 +174,7 @@ class GalRobot(Robot):
             # "submit": "%B5%C7%C2%BC"
         }
 
-        posturl = "https://www.9moe.com/login.php?"
+        posturl = self.url + "login.php?"
         self.open_session.post(
             posturl, data=postdata, headers=config.headers, allow_redirects=False
         )  # 注意这里加了headers的话，后面的get方法也要加headers才能用登陆的身份拿到网页
@@ -569,3 +573,21 @@ class BilibiliRobot(Robot):
                 }
                 data_list.append(video)
             return data_list
+
+
+class PSNRobot(Robot):
+    def parse(self):
+        data_list = []
+        result = self.connectpage(self.url, config.headers)
+        # items = self.get_items(".list > li .title.font16 a")
+        items = self.get_items(".list > li .meta")
+        for item in items:
+            data = {
+                "title": item.text(),
+                "link": item.attr("href"),
+                "type": "psnine"
+            }
+            print(item)
+
+            data_list.append(data)
+        # print(data_list)

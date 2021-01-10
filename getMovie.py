@@ -1,7 +1,6 @@
 from Config import config
 from Tools import robot
 from Tools import BackServer
-from Tools import parse_bilibili as pb
 
 
 def main():
@@ -41,6 +40,18 @@ def main():
     bilibili_data = robot005.parse()
     bs.save_data(bilibili_data, "link")
     bs.packaging_mes("title", "link")
+    bs.send_message()
+
+    robot006 = robot.BilibiliRobot("https://api.bilibili.com/x/space/arc/search?mid=928123&pn=1&ps=25&jsonp=jsonp")
+    bilibili_data = robot006.parse()
+    bs.save_data(bilibili_data, "link")
+    bs.packaging_mes("title", "author", "date", "link")
+    bs.send_message()
+
+    robot007 = robot.BilibiliRobot("https://api.bilibili.com/x/space/arc/search?mid=207539637&pn=1&ps=25&jsonp=jsonp")
+    bilibili_data = robot007.parse()
+    bs.save_data(bilibili_data, "link")
+    bs.packaging_mes("title", "author", "date", "link")
     bs.send_message()
 
 

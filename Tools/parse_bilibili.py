@@ -1,5 +1,8 @@
 from Config import config
 from datetime import datetime
+from Tools import robot
+import re
+import json
 
 
 def parse_bilibili(ob1, ob2, *gid):
@@ -23,3 +26,27 @@ def parse_bilibili(ob1, ob2, *gid):
         else:
             print("没有抓取到数据")
 
+
+# https://www.bilibili.com/bangumi/play/ss33378/  名侦探柯南
+# https://www.bilibili.com/bangumi/play/ss6422/   黑色四叶草
+def get_index():
+    robot001 = robot.Robot("www.baidu.com")
+    result = robot001.connectpage("https://www.bilibili.com/bangumi/play/ss6422/")
+    # robot001.sourcepage()
+    # item = re.findall("\"epList\"(.*)\],\"epInfo\"", result.text)
+    jsonstr = re.search("\"epList\":(.*),\"epInfo\"", result.text)
+    items = json.loads(jsonstr.group(1))
+    # items = re.findall("titleFormat(.*),", item.text)
+    # print(type(item.group(1)))
+    i = 0
+    for item in items:
+        i += 1
+        # print(item)
+        # print(item["title"])
+        print(item["longTitle"])
+        # print(i)
+    # print(items)
+
+
+if __name__ == '__main__':
+    get_index()

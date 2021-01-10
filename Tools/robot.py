@@ -357,13 +357,15 @@ class MaoYanRobot(Robot):
 
 class ToutiaoRobot(Robot):
     def parse(self):
-        result = self.connectpage(self.url, "utf-8")
+        result = self.connectpage(self.url, "utf-8", headers=config.headers)
+
+        print("有东西没：" + result.text)
         data_list = []
         news = result.json()["data"]
         for i in range(0, 10):
             data = {
                 "title": news[i]["title"],
-                "link": "https://www.toutiao.com" + news[i]["open_url"],
+                "link": "https://www.toutiao.com" + news[i]["source_url"],
                 "type": "今日头条",
                 "date": datetime.strptime(time.strftime('%Y-%m-%d %H:%M:%S'), "%Y-%m-%d %H:%M:%S")
             }
@@ -529,7 +531,8 @@ class SegmentFaultRobot(Robot):
 
 class LagouRobot(Robot):
     def parse(self):
-        self.connectpage(self.url, headers=config.headers_lagou, timeout=5)
+        result1 = self.connectpage(self.url, headers=config.headers_lagou, timeout=5)
+        print("首次获取：" + result1.text)
         data_list = []
         para = {"city": "长沙", "needAddtionalResult": "false"}
         # if len(args) == 1:
@@ -538,6 +541,7 @@ class LagouRobot(Robot):
         #     para = {"city": args[0], "needAddtionalResult": "false", "kd": args[1]}
 
         result = self.connectpage("https://www.lagou.com/jobs/positionAjax.json", "utf-8", params=para, headers=config.headers_lagou, timeout=5)
+        print(result.text)
         appid = result.json()["content"]["positionResult"]["result"]
         for i in range(0, 10):
             data = {
@@ -580,14 +584,14 @@ class PSNRobot(Robot):
         data_list = []
         result = self.connectpage(self.url, config.headers)
         # items = self.get_items(".list > li .title.font16 a")
-        items = self.get_items(".list > li .meta")
+        items = self.get_items(".list .title.font16 a")
         for item in items:
             data = {
                 "title": item.text(),
                 "link": item.attr("href"),
                 "type": "psnine"
             }
-            print(item)
-
+            # print(item)
+            print(data)
             data_list.append(data)
-        # print(data_list)
+        return data_list

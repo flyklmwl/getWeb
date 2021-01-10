@@ -85,9 +85,15 @@ headers_zhihu = {
 
 headers_lagou = {
     "Accept": "application/json, text/javascript, */*; q=0.01",
-    "Referer": "https://www.lagou.com/jobs/list_%E8%BF%90%E7%BB%B4?city=%E6%88%90%E9%83%BD&cl=false&fromSearch="
-    "true&labelWords=&suginput=",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    # "Referer": "https://www.lagou.com/jobs/list_%E8%BF%90%E7%BB%B4?city=%E6%88%90%E9%83%BD&cl=false&fromSearch="
+    # "true&labelWords=&suginput=",
+    "Cookie": "user_trace_token=20210109160117-d9d711da-5250-11eb-bca4-52540063a8d7; SEARCH_ID=dd38e6b640ad43f4a5dc78415690eda3; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22176e62a7e483f0-02651adaf4a2c38-4c3f207e-2073600-176e62a7e4a831%22%2C%22first_id%22%3A%22%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%2C%22%24os%22%3A%22Windows%22%2C%22%24browser%22%3A%22Firefox%22%2C%22%24browser_version%22%3A%2284.0%22%7D%2C%22%24device_id%22%3A%22176e62a7e483f0-02651adaf4a2c38-4c3f207e-2073600-176e62a7e4a831%22%7D; _ga=GA1.2.2134622424.1610179313; LGUID=20210109160154-1269b8ab-a7c8-48c1-89b5-f96939e4c8a7; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1610179313,1610254234; _gid=GA1.2.1363367379.1610179313; LGSID=20210110125035-4fd31bb5-6557-42f5-b7af-6249e2b5997c; PRE_UTM=; PRE_HOST=; PRE_SITE=; PRE_LAND=https%3A%2F%2Fpassport.lagou.com%2Flogin%2Flogin.html; LGRID=20210110125210-63606b72-e8fd-4d28-b2b2-9fc29d5c0add; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1610254329; JSESSIONID=ABAAABAABEIABCI82629F20A46774C46C5D14DA137B063D; WEBTJ-ID=20210110125044-176eaa1dc8d124-0e2c0efcb1195e-4c3f207e-2073600-176eaa1dc8e5ea; RECOMMEND_TIP=true; X_HTTP_TOKEN=cc4707dd6bac8e040334520161ff97759aefa97eb1; _gat=1; sensorsdata2015session=%7B%7D; index_location_city=%E5%85%A8%E5%9B%BD",
+    # "Host": "www.lagou.com",
+    "Origin": "https://www.lagou.com",
+    "Pragma": "no-cache",
+    "Referer": "https://www.lagou.com/jobs/list_%E8%BF%90%E7%BB%B4",
+    # "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0"
 }
 
 agent = [

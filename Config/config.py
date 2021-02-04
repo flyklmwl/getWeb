@@ -54,6 +54,12 @@ HOUSE_TABLE = "house"
 WX_CRT_HOUSE = "neZF6RcniF9PnZ6k8SrDnM0fhOLU9-t5WMpI7zd4ZNg"
 WX_AGTID_HOUSE = "1000009"
 
+# ================================图  书==========================================
+BOOK_URL = "localhost"
+BOOK_DB = "webdata"
+BOOK_TABLE = "book"
+
+
 # ================================测  试==========================================
 WX_CRT_TEST = "thYP3T_aOhmsGpTOA6b3zSiw455CbiskW41Wsm3BVNU"
 WX_AGTID_TEST = "1000007"

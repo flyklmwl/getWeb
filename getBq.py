@@ -28,12 +28,12 @@ def parse_bq(url):
         title = item("a").attr("title") + hz
         download(img_url, "img\\" + title)
         time.sleep(3)
-        print(title)
+        # print(title)
 
 
 def download(url, path):
     r = requests.get(url)
-    print("ok")
+    # print("ok")
     try:
         with open(path, "wb") as f:
             f.write(r.content)

@@ -66,10 +66,6 @@ class Robot:
         item = doc(select_css).items()
         return item
 
-    # def parse_json(self, json, list):
-    #     print(a)
-    #     return True
-
 
 class GalRobot(Robot):
     def parse(self):
@@ -292,7 +288,7 @@ class G3dmDJRobot(Robot):
                 "type": "3dm_dj"
             }
             data_list.append(data)
-            print(data["date"])
+            # print(data["date"])
         return data_list
 
 
@@ -358,8 +354,6 @@ class MaoYanRobot(Robot):
 class ToutiaoRobot(Robot):
     def parse(self):
         result = self.connectpage(self.url, "utf-8", headers=config.headers)
-
-        print("有东西没：" + result.text)
         data_list = []
         news = result.json()["data"]
         for i in range(0, 10):
@@ -432,7 +426,7 @@ class TieBaRobot(Robot):
     def parse(self):
         result = self.connectpage(self.url, headers=config.headers)
         data_list = []
-        print(result.text)
+        # print(result.text)
         baidu_tz = result.json()["data"]["bang_topic"]["topic_list"]
         for i in range(0, 10):
             data = {
@@ -468,7 +462,7 @@ class TieBa2Robot(Robot):
                     "author": self.author,
                     "date": datetime.strptime(time.strftime('%Y-%m-%d %H:%M:%S'), "%Y-%m-%d %H:%M:%S")
                 }
-                print(tieba)
+                # print(tieba)
                 data_list.append(tieba)
         return data_list
 
@@ -532,7 +526,7 @@ class SegmentFaultRobot(Robot):
 class LagouRobot(Robot):
     def parse(self):
         result1 = self.connectpage(self.url, headers=config.headers_lagou, timeout=5)
-        print("首次获取：" + result1.text)
+        # print("首次获取：" + result1.text)
         data_list = []
         para = {"city": "长沙", "needAddtionalResult": "false"}
         # if len(args) == 1:
@@ -541,7 +535,7 @@ class LagouRobot(Robot):
         #     para = {"city": args[0], "needAddtionalResult": "false", "kd": args[1]}
 
         result = self.connectpage("https://www.lagou.com/jobs/positionAjax.json", "utf-8", params=para, headers=config.headers_lagou, timeout=5)
-        print(result.text)
+        # print(result.text)
         appid = result.json()["content"]["positionResult"]["result"]
         for i in range(0, 10):
             data = {
@@ -592,6 +586,51 @@ class PSNRobot(Robot):
                 "type": "psnine"
             }
             # print(item)
-            print(data)
+            # print(data)
             data_list.append(data)
         return data_list
+
+
+# 抓取湖南图书馆技术类图书
+class hn_book_Robot(Robot):
+    pagecount = 0
+    data_list = []
+
+    para = {
+        "q": "TP",  # &q=TP
+        "searchType": "standard",
+        "isFacet": "false",  # isFacet=false
+        "view": "simple",  # view=simple
+        "searchWay": "class",  # searchWay=class
+        "classname": "TP 自动化技术、计算机技术",
+        "rows": "1000",
+        "sortWay": "score",
+        "sortOrder": "desc",
+        "searchWay0": "marc",
+        "logical0": "AND",
+        "page": 1
+    }
+
+    def get_pagecount(self):
+        result = self.connectpage("http://opac.library.hn.cn/opac/search", params=self.para)
+        pagecount = re.search("总共(.*)页", result.text).group(1)
+        self.pagecount = int(pagecount)
+
+    def get_per_menu(self):
+        result = self.connectpage("http://opac.library.hn.cn/opac/search", params=self.para)
+
+        items = self.get_items(".bookmetaTD > .bookmeta")
+        x = 0
+        for item in items:
+            x = x + 1
+            data = {
+                "title": str(x) + item(".bookmetaTitle").text()
+            }
+            self.data_list.append(data)
+
+    def get_book_menu(self):
+        self.get_pagecount()
+        for page in range(1, self.pagecount):
+            self.para["page"] = page
+            self.get_per_menu()
+        return self.data_list

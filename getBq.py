@@ -1,10 +1,8 @@
 from Config import config
-from Tools import robot
+from Tools import robot, loggingset
 from Tools import BackServer
 import requests
 import time
-from datetime import datetime
-
 
 robot001 = robot.Robot("www.baidu.com")
 bs1 = BackServer.BackServer(
@@ -39,7 +37,7 @@ def download(url, path):
             f.write(r.content)
         f.close()
     except OSError:
-        print("有问题")
+        loggingset.logger.error("有问题")
 
 
 def main():

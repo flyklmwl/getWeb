@@ -1,8 +1,8 @@
 from Config import config
-from Tools import robot
-from Tools import BackServer
+from Tools import robot, BackServer, loggingset
 
 
+@loggingset.logtrace
 def main():
     bs = BackServer.BackServer(
         config.NEWS_URL,
@@ -12,6 +12,7 @@ def main():
         config.WX_AGTID_NEWS,
     )
 
+    loggingset.logger.info("----------开始抓取新闻数据----------")
     robot001 = robot.ToutiaoRobot("https://www.toutiao.com/api/pc/feed/?min_behot_time=0&category=news_hot&utm_source="
                                   "toutiao&widen=1&tadrequire=true")
     toutiao_data = robot001.parse()
@@ -72,6 +73,7 @@ def main():
     bs.save_data(psndata, "link")
     bs.packaging_mes("title", "link")
     bs.send_message()
+    loggingset.logger.info("----------新闻数据已抓取完成----------")
 
 
 if __name__ == "__main__":

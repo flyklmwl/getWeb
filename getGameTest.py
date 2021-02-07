@@ -1,8 +1,8 @@
 from Config import config
-from Tools import robot
-from Tools import BackServer
+from Tools import robot, BackServer, loggingset
 
 
+@loggingset.logtrace
 def main():
     bs = BackServer.BackServer(
         config.GAMETEST_URL,
@@ -12,6 +12,7 @@ def main():
         config.WX_AGTID_GT,
     )
 
+    loggingset.logger.info("----------开始抓取游戏评测数据----------")
     robot001 = robot.YouXiaRobot("http://www.ali213.net/news/pingce/")
     youxia_data = robot001.parse()
     bs.save_data(youxia_data, "link")
@@ -58,6 +59,7 @@ def main():
     bs.save_data(_163_data, "link")
     bs.packaging_mes("title", "link")
     bs.send_message()
+    loggingset.logger.info("----------游戏评测数据已抓取完成----------")
 
 
 if __name__ == "__main__":

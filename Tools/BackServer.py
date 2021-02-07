@@ -1,3 +1,4 @@
+from Tools import loggingset
 import pymongo
 import urllib.request
 import json
@@ -22,11 +23,11 @@ class BackServer:
 
     def save_to_mongodb(self, save_table, result):
         if self.db[save_table].insert_one(result):
-            print("inserted into table")
+            loggingset.logger.debug("inserted into table")
 
     def del_to_mongodb(self, save_table, del_title, del_value):
         if self.db[save_table].delete_one({del_title: del_value}):
-            print("delete document")
+            loggingset.logger.debug("delete document")
 
     def send_message(self, *args):
         if len(args) == 1:
@@ -34,7 +35,7 @@ class BackServer:
         else:
             msg = {"content": " ".join(self.send_arr)}
             if not self.send_arr:
-                print("需要发送的信息不存在")
+                loggingset.logger.info("需要发送的信息不存在")
                 return
 
         corpid = "wxeb4380288018eb1c"
@@ -62,31 +63,37 @@ class BackServer:
         ).read()
         x = json.loads(respone.decode())["errcode"]
         if x == 0:
-            print("Succesfully")
+            loggingset.logger.info("已将抓取信息发送到微信")
             if len(args) == 0:
                 self.clear_arr()
         else:
-            print("Failed")
+            loggingset.logger.error("发送到微信失败")
             if len(args) == 0:
                 self.clear_arr()
 
     def save_update_data(self, datalist, s_key):
+        save_count = 0
         for data in datalist:
             if self.search_mongodb(self.contable, s_key, data[s_key]) < 1:
                 self.save_to_mongodb(self.contable, data)
                 self.leave_arr.append(data)
+                save_count += 1
             else:
                 self.del_to_mongodb(self.contable, s_key, data[s_key])
                 self.save_to_mongodb(self.contable, data)
-                print("已经保存了该主题")
+                loggingset.logger.debug("已经保存了该主题")
+        loggingset.logger.info("已存数据：" + str(save_count) + "条")
 
     def save_data(self, datalist, s_key):
+        save_count = 0
         for data in datalist:
             if self.search_mongodb(self.contable, s_key, data[s_key]) < 1:
                 self.save_to_mongodb(self.contable, data)
                 self.leave_arr.append(data)
+                save_count += 1
             else:
-                print("已经保存了该主题")
+                loggingset.logger.debug("已经保存了该主题")
+        loggingset.logger.info("已存数据：" + str(save_count) + "条")
 
     def packaging_mes(self, *args):
         # for i in range(len(args)):

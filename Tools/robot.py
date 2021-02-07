@@ -1,5 +1,5 @@
 from pyquery import PyQuery as pq
-from Tools import BackServer
+from Tools import BackServer, loggingset
 from Config import config
 from datetime import datetime
 import http.cookiejar as cookielib
@@ -8,7 +8,6 @@ import requests
 import os
 import re
 import time
-
 import parsel
 
 
@@ -42,18 +41,18 @@ class Robot:
             try:
                 self.result = self.open_session.get(url[0], **args)
             except requests.exceptions.ConnectTimeout:
-                print("Timeout, try again")
+                loggingset.logger.error("Timeout, try again")
                 num -= 1
             except requests.exceptions.ReadTimeout:
-                print("ReadTimeout,try again")
+                loggingset.logger.error("ReadTimeout,try again")
                 num -= 1
             else:
-                print("已成功获取网页")  # 成功获取
+                loggingset.logger.debug("已成功获取网页")  # 成功获取
                 if len(url) > 1:
                     self.result.encoding = url[1]
                 return self.result
         else:
-            print("Try 3 times, But all failed")  # 3次都失败
+            loggingset.logger.error("Try 3 times, But all failed")  # 3次都失败
             exit(-1)
 
     def get_item(self, select_css):
@@ -69,8 +68,7 @@ class Robot:
 
 class GalRobot(Robot):
     def parse(self):
-        print("这里是解析的具体方法")
-        print("开始解析网页")
+        loggingset.logger.info("开始解析网页")
         #   r = requests.get(url='https://www.9moe.com/', headers=headers)  # 注意这个网页没有登录拿到的是缓存的页面，不是最新
         self.connectpage(self.url, headers=config.headers, timeout=5)
 
@@ -132,7 +130,7 @@ class GalRobot(Robot):
         try:
             self.open_session.cookies.load()
         except FileNotFoundError:
-            print("没有cookie文件")
+            loggingset.logger.error("没有cookie文件")
         try:
             responseres = self.open_session.get(
                 self.url,
@@ -140,13 +138,13 @@ class GalRobot(Robot):
                 allow_redirects=False,
             )
         except TimeoutError:
-            print("没有登陆")
+            loggingset.logger.error("没有登陆")
         # print(f"isLogin = {responseres.status_code}")
-        print("获取首页代码")
+        loggingset.logger.info("获取首页代码")
         # print(responseres.text)
         result = re.search("wind1314", responseres.text, re.M)
         if result:
-            print("已经登陆")
+            loggingset.logger.info("已经登陆")
             return True
         else:
             return False
@@ -155,7 +153,7 @@ class GalRobot(Robot):
         self.open_session.cookies = cookielib.LWPCookieJar(
             filename=os.getcwd() + "/Log/galcookies.txt"
         )
-        print("正在登陆...")
+        loggingset.logger.info("正在登陆...")
         postdata = {
             "forward": "",
             # "jumpurl": "https://www.9moe.com/index.php",
@@ -307,7 +305,7 @@ class JsonRobot(Robot):
                 try:
                     singledict[key] = app[self.datadict[key]]
                 except KeyError as e:
-                    print("该变量没有找到相关字段：" + str(e))
+                    # loggingset.logger.error("该变量没有找到相关字段：" + str(e))
                     singledict[key] = self.datadict[key]
             data_list.append(singledict)
         return data_list

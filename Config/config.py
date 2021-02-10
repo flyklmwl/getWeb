@@ -1,4 +1,4 @@
-# ===============================GAL游戏==========================================
+# ===============================GAL游戏=========================================
 GAL_URL = "localhost"
 GAL_DB = "webdata"
 GAL_TABLE = "feiyue"
@@ -12,6 +12,20 @@ GAMETEST_TABLE = "gamepc"
 
 WX_CRT_GT = "LuksPh4Au0Gw4fTP6XcxFXjBFYLnlUXPX07AAa1k730"
 WX_AGTID_GT = "1000002"
+# ==============================单机游戏列表=======================================
+DJYX_URL = "localhost"
+DJYX_DB = "webdata"
+DJYX_TABLE = "djyx"
+
+WX_CRT_DJYX = "hsK4B4wBP68IFIeNjsh-qppeczdw4Seq2fJQGRFPriE"
+WX_AGTID_DJYX = "1000010"
+# ==============================BiliBili 视频=====================================
+BiliBili_URL = "localhost"
+BiliBili_DB = "webdata"
+BiliBili_TABLE = "BiliBili"
+
+WX_CRT_BiliBili = "GjzJB3OPXa5iO1oTcvdHXplArSHglerogSSkqC1qN8E"
+WX_AGTID_BiliBili = "1000011"
 # ===============================新    闻=========================================
 NEWS_URL = "localhost"
 NEWS_DB = "webdata"
@@ -19,6 +33,20 @@ NEWS_TABLE = "news"
 
 WX_CRT_NEWS = "4Xam8u4eDMPlM1SygIRfNfC04vSwVRzfxelGQ3sPigQ"
 WX_AGTID_NEWS = "1000003"
+# ===============================单机游戏新闻======================================
+GAME_NEWS_URL = "localhost"
+GAME_NEWS_DB = "webdata"
+GAME_NEWS_TABLE = "djnews"
+
+WX_CRT_GAME_NEWS = "qDNcPdSadJnnPu3tjkhnLbB4IZcQd-XoteFigrqWkAs"
+WX_AGTID_GAME_NEWS = "1000012"
+# ===============================知    乎========================================
+ZHIHU_URL = "localhost"
+ZHIHU_DB = "webdata"
+ZHIHU_TABLE = "zhihu"
+
+WX_CRT_ZHIHU = "Oj1jCsSoRr2DcApXRdaGLDFBPdtBbrJhaIRmynp4s0Q"
+WX_AGTID_ZHIHU = "1000013"
 # ===============================技    术=========================================
 TECH_URL = "localhost"
 TECH_DB = "webdata"

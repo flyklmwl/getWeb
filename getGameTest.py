@@ -37,12 +37,6 @@ def main():
     bs.packaging_mes("title", "link")
     bs.send_message()
 
-    robot005 = robot.G3dmDJRobot("https://dl.3dmgame.com/")
-    _3dm_news_data = robot005.parse()
-    bs.save_data(_3dm_news_data, "link")
-    bs.packaging_mes("title", "link")
-    bs.send_message()
-
     data = {
         "title": "title",
         "link": "link",
@@ -51,11 +45,11 @@ def main():
         "type": "163game"
     }
 
-    robot006 = robot.JsonRobot("https://cain-api.gameyw.netease.com"
+    robot005 = robot.JsonRobot("https://cain-api.gameyw.netease.com"
                                "/cain/site/config?app=3&code=eval_new&start=0&size=20",
                                data
                                )
-    _163_data = robot006.parse()
+    _163_data = robot005.parse()
     bs.save_data(_163_data, "link")
     bs.packaging_mes("title", "link")
     bs.send_message()

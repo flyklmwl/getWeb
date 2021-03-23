@@ -13,11 +13,18 @@ def main():
     )
 
     loggingset.logger.info("----------开始抓取工作数据----------")
-    robot001 = robot.LagouRobot("https://www.lagou.com/jobs/list_运维")
-    lagou_data = robot001.parse()
-    bs.save_data(lagou_data, "link")
+    # robot001 = robot.LagouRobot("https://www.lagou.com/jobs/list_运维")
+    # lagou_data = robot001.parse()
+    # bs.save_data(lagou_data, "link")
+    # bs.packaging_mes("jobName", "updateDate", "salary", "companyName", "link")
+    # bs.send_message()
+
+    robot002 = robot.zhilianRobot("http://www.zhilian.com")
+    zhilian_data = robot002.parse()
+    bs.save_data(zhilian_data, "link")
     bs.packaging_mes("jobName", "updateDate", "salary", "companyName", "link")
     bs.send_message()
+
     loggingset.logger.info("----------工作数据已抓取完成----------")
 
 

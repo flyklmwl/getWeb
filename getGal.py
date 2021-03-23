@@ -12,12 +12,12 @@ def main():
         config.WX_AGTID_GAL,
     )
     loggingset.logger.info("----------开始抓取Galgame 帖子----------")
-    robot001 = robot.GalRobot("https://bbs.kforz.com/")
+    robot001 = robot.GalRobot("https://bbs.kfmax.com/")
 
     islogintag = robot001.islogin()
     if islogintag is False:
         loggingset.logger.info(f"没有登陆网页，用户重新登录...")
-        robot001.login("wind1314", "flyklmwl")
+        robot001.login("flyklmwl", "482009")
 
     gal_dict = robot001.parse()
     bs.save_update_data(gal_dict, "tz_link")

@@ -24,6 +24,13 @@ def main():
     bs.save_data(psndata, "link")
     bs.packaging_mes("title", "link")
     bs.send_message()
+
+    robot001 = robot.tgbusRobot("https://www.tgbus.com/")
+    tgbusdata = robot001.parse()
+    bs.save_data(tgbusdata, "link")
+    bs.packaging_mes("title", "link")
+    bs.send_message()
+
     loggingset.logger.info("----------游戏新闻数据已抓取完成----------")
 
 

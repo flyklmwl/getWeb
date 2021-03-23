@@ -5,11 +5,11 @@ from Tools import robot, BackServer, loggingset
 @loggingset.logtrace
 def main():
     bs = BackServer.BackServer(
-        config.NEWS_URL,
-        config.NEWS_DB,
-        config.NEWS_TABLE,
-        config.WX_CRT_NEWS,
-        config.WX_AGTID_NEWS,
+        config.ZHIHU_URL,
+        config.ZHIHU_DB,
+        config.ZHIHU_TABLE,
+        config.WX_CRT_ZHIHU,
+        config.WX_AGTID_ZHIHU,
     )
 
     loggingset.logger.info("----------开始抓取知乎数据----------")

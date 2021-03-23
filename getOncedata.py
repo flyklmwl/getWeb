@@ -45,7 +45,7 @@ def hint():
 
 
 if __name__ == '__main__':
-    get_konan_date()
+    # get_konan_date()
 
     if len(sys.argv) < 2:
         print("请输入需要执行的参数： hnbook or biliplaybook")

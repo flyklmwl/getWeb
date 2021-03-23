@@ -273,6 +273,22 @@ class G17173Robot(Robot):
         return data_list
 
 
+class TgbusTest(Robot):
+    def parse(self):
+        data_list = []
+        result = self.connectpage(self.url, "utf-8")
+        items = self.get_items("div.information-item a")
+        for item in items:
+            data = {
+                "title": item("h4").text(),
+                "link": item.attr("href"),
+                "author": item(".information-item__author").text(),
+                "date": item(".information-item__date").text()
+            }
+            data_list.append(data)
+        return data_list
+
+
 class G3dmDJRobot(Robot):
     def parse(self):
         self.connectpage(self.url)
@@ -553,6 +569,33 @@ class LagouRobot(Robot):
         return data_list
 
 
+class zhilianRobot(Robot):
+    def parse(self):
+        data_list = []
+        para = {
+            "pageNo": 1,
+            "pageSize": 10,
+            "cityId": 749,
+            "workExperience": -1,
+            "jobType": "20000000000000%2C20000200000000%2C20000200320000"
+        }
+        result = self.connectpage("https://fe-api.zhaopin.com/c/i/jobs/searched-jobs", params=para)
+
+        appid = result.json()["data"]["list"]
+        for app in appid:
+            data = {
+                "jobName": app["name"],
+                "updateDate": app["publishTime"],
+                "salary": app["salary"],
+                "companyName": app["company"],
+                "link": app["positionUrl"],
+                "type": "zhilian"
+            }
+            print(data)
+            data_list.append(data)
+        return data_list
+
+
 class BilibiliRobot(Robot):
     def parse(self):
         data_list = []
@@ -570,6 +613,12 @@ class BilibiliRobot(Robot):
                 data_list.append(video)
             return data_list
 
+    def parsebd(self):
+        result = self.connectpage(self.url, "utf-8")
+        appid = result.json()["data"]["list"]
+        for app in appid:
+            print(app["data"]["uid"] + ", ", end='')
+
 
 class PSNRobot(Robot):
     def parse(self):
@@ -585,6 +634,25 @@ class PSNRobot(Robot):
             }
             # print(item)
             # print(data)
+            data_list.append(data)
+        return data_list
+
+
+class tgbusRobot(Robot):
+    def parse(self):
+        data_list = []
+        result = self.connectpage(self.url)
+        items1 = list(self.get_items("div.home-news__list:nth-child(1) a"))
+        items2 = list(self.get_items("div.home-news__list:nth-child(2) a"))
+
+        items = items1 + items2
+        for item in items:
+            print(item)
+            data = {
+                "title": item.text(),
+                "link": item.attr("href"),
+                "type": "tgbus"
+            }
             data_list.append(data)
         return data_list
 
